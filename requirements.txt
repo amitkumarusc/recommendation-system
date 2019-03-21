@@ -1,2 +1,6 @@
 Flask==0.12.2
 redis==3.2.1
+numpy==1.13.3
+pandas==0.21.1
+requests==2.20.0
+bs4==0.0.1

@@ -1,6 +1,13 @@
+import redis
+import random
 from flask import Flask, render_template, request, jsonify, Response
+from model import Recommender
 
 app = Flask(__name__)
+
+db = redis.Redis('redis')
+
+recommender = Recommender()
 
 @app.route("/")
 def home():
@@ -18,7 +25,7 @@ def user(user_id):
 					'url': 'https://m.media-amazon.com/images/M/MV5BMWU4ZjNlNTQtOGE2MS00NDI0LWFlYjMtMmY3ZWVkMjJkNGRmXkEyXkFqcGdeQXVyNjE1OTQ0NjA@._V1_UY268_CR2,0,182,268_AL_.jpg'
 				}
 		]
-	return render_template('movies.html',queryResponse=movies,)
+	return render_template('movies.html', queryResponse=movies)
 
 
 
