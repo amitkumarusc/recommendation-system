@@ -36,8 +36,11 @@ class Recommender(object):
         return movie_ids
 
     def displayMovies(self, movie_ids):
+        movie_names = []
         for movie_id in movie_ids:
-            print self.movies[self.movies['movieId'] == movie_id].values.tolist()[0]
+            movie_name = self.movies[self.movies['movieId'] == movie_id].values.tolist()[0]
+            movie_names.append(movie_name)
+        return movie_names
 
     def filterWatchedMovies(self, user_id, ordered_movie_ids):
         all_movies = set(ordered_movie_ids)

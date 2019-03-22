@@ -5,9 +5,21 @@
 {% endblock %}
 {% block content %}
 	<div class="search-form">
-		{% for item in queryResponse %}
-				<img src="{{ item['url'] }}" />
+		<table>
+			<tr>
+				<th>Movie Name</th>
+				<th>Genre</th>
+				<th>URL</th>
+			</tr>
+			{% for item in queryResponse %}
+				<tr>
+					<td>{{ item['title'] }}</td>
+					<td>{{ item['genre'] }}</td>
+					<td>{{ item['url'] }}</td>
+				</tr>
+					<!-- <img src="{{ item['url'] }}" /> -->
 			{% endfor %}
+		</table>
 	</div>
 {% endblock %}
 
