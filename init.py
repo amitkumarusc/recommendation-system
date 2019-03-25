@@ -31,7 +31,7 @@ def user(user_id):
 		]
 	movie_ids = recommender.recommendMoviesTo(1, limit=300)
 	movies_info = recommender.displayMovies(movie_ids)
-	movies = prepareMovies(movies_info)
+	movies = prepareMovies(movies_info)[:10]
 	return render_template('movies.html', queryResponse=movies)
 
 def prepareMovies(movies_info):
@@ -40,7 +40,7 @@ def prepareMovies(movies_info):
 		movie = {}
 		movie['title'] = movie_info[1]
 		movie['genre'] = movie_info[2]
-		movie['url'] = ''
+		movie['url'] = 'https://m.media-amazon.com/images/M/MV5BMWU4ZjNlNTQtOGE2MS00NDI0LWFlYjMtMmY3ZWVkMjJkNGRmXkEyXkFqcGdeQXVyNjE1OTQ0NjA@._V1_UY268_CR2,0,182,268_AL_.jpg'
 		movies.append(movie)
 	return movies
 

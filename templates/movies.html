@@ -5,7 +5,20 @@
 {% endblock %}
 {% block content %}
 	<div class="search-form">
-		<table>
+		<div class="scrolling-wrapper-flexbox">
+
+			
+			
+			{% for item in queryResponse %}
+				<div class="card">
+					<img src="{{ item['url'] }}"/>
+					<p class="img_name">{{ item['title'] }}</p>
+				</div>
+			{% endfor %}
+
+		</div>
+
+		<!-- <table>
 			<tr>
 				<th>Movie Name</th>
 				<th>Genre</th>
@@ -17,9 +30,9 @@
 					<td>{{ item['genre'] }}</td>
 					<td>{{ item['url'] }}</td>
 				</tr>
-					<!-- <img src="{{ item['url'] }}" /> -->
+					<img src="{{ item['url'] }}" />
 			{% endfor %}
-		</table>
+		</table> -->
 	</div>
 {% endblock %}
 
