@@ -4,22 +4,47 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-	<div class="search-form">
-		<table>
-			<tr>
-				<th>Movie Name</th>
-				<th>Genre</th>
-				<th>URL</th>
-			</tr>
-			{% for item in queryResponse %}
-				<tr>
-					<td>{{ item['title'] }}</td>
-					<td>{{ item['genre'] }}</td>
-					<td>{{ item['url'] }}</td>
-				</tr>
-					<!-- <img src="{{ item['url'] }}" /> -->
-			{% endfor %}
-		</table>
+	<div>
+		<div>
+			<h2>Recommendations</h2>
+			<div class="scrolling-wrapper-flexbox">
+				{% for item in recommended %}
+					<div class="card">
+						<div class="movie-info">
+							<img src="{{ item['url'] }}"/>
+							<p class="img-caption">{{ item['title'] }}</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+		<div>
+			<h2>Watch it again</h2>
+			<div class="scrolling-wrapper-flexbox">
+				{% for item in watched %}
+					<div class="card">
+						<div class="movie-info">
+							<img src="{{ item['url'] }}"/>
+							<p class="img-caption">{{ item['title'] }}</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+		<div>
+			<h2>Beacuse you had watched {{ similar_to['name'] }}</h2>
+			<div class="scrolling-wrapper-flexbox">
+				{% for item in similar_to['recommendations'] %}
+					<div class="card">
+						<div class="movie-info">
+							<img src="{{ item['url'] }}"/>
+							<p class="img-caption">{{ item['title'] }}</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
 	</div>
 {% endblock %}
-

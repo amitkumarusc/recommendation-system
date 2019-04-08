@@ -61,14 +61,14 @@ class AlternatingLeastSquare(object):
             lambda_i = np.identity(y_dot_y.shape[0]) * self.users_reg
             
             for user_index in range(variable_matrix.shape[0]):
-                variable_matrix[user_index, :] = np.linalg.solve(y_dot_y + lambda_i,                                                                 self.characteristic_matrix[user_index, :].dot(constant_matrix))
+                variable_matrix[user_index, :] = np.linalg.solve(y_dot_y + lambda_i, self.characteristic_matrix[user_index, :].dot(constant_matrix))
             
         elif chance == AlternatingLeastSquare.MOVIES_MATRIX:
             x_dot_x = constant_matrix.T.dot(constant_matrix)
             lambda_i = np.identity(x_dot_x.shape[0]) * self.movies_reg
             
             for movie_index in range(variable_matrix.shape[0]):
-                variable_matrix[movie_index, :] = np.linalg.solve(x_dot_x + lambda_i,                                                                 self.characteristic_matrix[:, movie_index].T.dot(constant_matrix))
+                variable_matrix[movie_index, :] = np.linalg.solve(x_dot_x + lambda_i, self.characteristic_matrix[:, movie_index].T.dot(constant_matrix))
         return variable_matrix
     
     def predict(self, user, movie):

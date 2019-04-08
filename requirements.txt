@@ -4,3 +4,4 @@ numpy==1.13.3
 pandas==0.21.1
 requests==2.20.0
 bs4==0.0.1
+psycopg2==2.7.4

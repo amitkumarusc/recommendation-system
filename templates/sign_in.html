@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<div>
+	<aside class="login-form col-md-6">
+		<div class="card">
+			<article class="card-body">
+				<a href="" class="btn btn-outline-primary float-right">Sign up</a>
+				<h4 class="card-title mt-1 mb-4">Sign in</h4>
+				<form action="/signin" method='post'>
+					<div class="form-group">
+						<label>Your user id</label>
+						<input name="userid" class="form-control" placeholder="An integer number" type="number">
+					</div>
+					<div class="form-group">
+						<a class="float-right" href="#">Forgot?</a>
+						<label>Your password</label>
+						<input class="form-control" placeholder="******" type="password">
+					</div>
+					<div class="form-group"> 
+						<div class="checkbox">
+							<label> <input type="checkbox"> Save password </label>
+						</div>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-block"> Login  </button>
+					</div>
+				</form>
+			</article>
+		</div> 
+	</aside>
+</div>
+{% endblock %}

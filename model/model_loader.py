@@ -29,7 +29,7 @@ class ModelLoader(object):
 
 	def trainModelFromScratch(self):
 		movies, ratings = self.loadDatasets()
-		ratings_subset = self.preprocessData(ratings, factor=0.000005)
+		ratings_subset = self.preprocessData(ratings, factor=0.5)
 		characteristic_matrix, mappings = self.getCharateristicMatrix(ratings_subset)
 		train_matrix, test_matrix = self.train_test_split(characteristic_matrix)
 		best_model = self.findBestHyperParams(train_matrix, test_matrix)
@@ -54,7 +54,7 @@ class ModelLoader(object):
 		print('Datasets loaded successfully')
 		return movies, ratings
 
-	def preprocessData(self, user_movie_rating, factor=0.5):
+	def preprocessData(self, user_movie_rating, factor=0.25):
 		size = user_movie_rating.shape[0]
 		partition_index = int(size*factor)
 		subset = user_movie_rating.iloc[:partition_index, :]
