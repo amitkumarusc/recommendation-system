@@ -3,13 +3,7 @@ import pandas as pd
 import numpy as np
 import pickle
 from als import AlternatingLeastSquare
-
-class BestModel(object):
-	def __init__(self, movies, model, ratings, mappings):
-		self.ratings = ratings
-		self.model = model
-		self.mappings = mappings
-		self.movies = movies
+from .best_model import BestModel
 
 class ModelLoader(object):
 	def __init__(self):

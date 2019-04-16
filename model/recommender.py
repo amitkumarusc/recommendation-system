@@ -1,6 +1,8 @@
 import numpy as np
 from model_loader import ModelLoader
 
+RESP_SIZE = 30
+
 class Recommender(object):
     def __init__(self):
         np.random.seed(0)
@@ -9,6 +11,34 @@ class Recommender(object):
         self.mappings = self.model_obj.mappings
         self.ratings = self.model_obj.ratings
         self.movies = self.model_obj.movies
+        self.preparePopularMovies()
+
+    def preparePopularMovies(self):
+        groups = self.ratings.groupby(by='movieId')['rating'].agg(['sum','count'])
+        groups = groups.reset_index()
+        groups['averageRating'] = groups['sum']/(1.0*groups['count'])
+        average_rating = groups['averageRating'].mean()
+        minimum_reviews = groups['count'].quantile(0.90)
+        self.popularMovies = groups.copy().loc[groups['count'] >= minimum_reviews]
+        self.popularMovies['score'] = self.popularMovies.apply(lambda x: self.bayesian_average(x, minimum_reviews, average_rating), axis=1)
+        self.popularMovies = self.popularMovies.sort_values('score', ascending=False)
+
+    def getPopularMovies(self, limit=RESP_SIZE):
+        return list(self.popularMovies[:limit]['movieId'].values)
+
+    def getRecentMovies(self):
+        years = map(str, range(2015, 2020))
+        recent_movies = self.movies[self.movies['title'].str.contains('|'.join(years)) & ~self.movies['title'].str.startswith('2')][:RESP_SIZE]['movieId'].values
+        return list(recent_movies)
+
+    def bayesian_average(self, row, minimum_reviews, average_rating):
+        v = row['count']
+        R = row['averageRating']
+        return (v/(v+minimum_reviews) * R) + (minimum_reviews/(minimum_reviews+v) * average_rating)
+
+    def getWatchedMovies(self, user_id):
+        already_watched = self.ratings[self.ratings['userId'] == user_id].sort_values('rating', ascending=False)[:RESP_SIZE]['movieId'].values
+        return list(already_watched)
 
     def getUserIdsFromMatrixIndexes(self, matrix_indexes, user_mapping, preserve_order=True):
         user_ids = []

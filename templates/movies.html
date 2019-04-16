@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
 	<div>
-		<div>
+		<div class="listing">
 			<h2>Recommendations</h2>
 			<div class="scrolling-wrapper-flexbox">
 				{% for item in recommended %}
@@ -19,7 +19,36 @@
 			</div>
 		</div>
 
-		<div>
+		<div class="listing">
+			<h2>Recent Releases</h2>
+			<div class="scrolling-wrapper-flexbox">
+				{% for item in recent %}
+					<div class="card">
+						<div class="movie-info">
+							<img src="{{ item['url'] }}"/>
+							<p class="img-caption">{{ item['title'] }}</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+		<div class="listing">
+			<h2>Popular</h2>
+			<div class="scrolling-wrapper-flexbox">
+				{% for item in popular %}
+					<div class="card">
+						<div class="movie-info">
+							<img src="{{ item['url'] }}"/>
+							<p class="img-caption">{{ item['title'] }}</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+
+		<div class="listing">
 			<h2>Watch it again</h2>
 			<div class="scrolling-wrapper-flexbox">
 				{% for item in watched %}
@@ -33,7 +62,7 @@
 			</div>
 		</div>
 
-		<div>
+		<div class="listing">
 			<h2>Beacuse you had watched {{ similar_to['name'] }}</h2>
 			<div class="scrolling-wrapper-flexbox">
 				{% for item in similar_to['recommendations'] %}
