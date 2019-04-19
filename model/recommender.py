@@ -36,8 +36,11 @@ class Recommender(object):
         R = row['averageRating']
         return (v/(v+minimum_reviews) * R) + (minimum_reviews/(minimum_reviews+v) * average_rating)
 
-    def getWatchedMovies(self, user_id):
-        already_watched = self.ratings[self.ratings['userId'] == user_id].sort_values('rating', ascending=False)[:RESP_SIZE]['movieId'].values
+    def getWatchedMovies(self, user_id, limit=RESP_SIZE):
+        if limit:
+            already_watched = self.ratings[self.ratings['userId'] == user_id].sort_values('rating', ascending=False)[:RESP_SIZE]['movieId'].values
+        else:
+            already_watched = self.ratings[self.ratings['userId'] == user_id].sort_values('rating', ascending=False)['movieId'].values
         return list(already_watched)
 
     def getUserIdsFromMatrixIndexes(self, matrix_indexes, user_mapping, preserve_order=True):
@@ -53,17 +56,14 @@ class Recommender(object):
             movie_ids.append(movie_mapping[index])
         return movie_ids
 
-    def getWatchedMovies(self, user_id):
-        rated_movies = self.ratings[self.ratings['userId'] == user_id]['movieId'].values.tolist()
-        return rated_movies
-
-    def recommendMoviesTo(self, user_id, limit=50):
+    def recommendMoviesTo(self, user_id, limit=RESP_SIZE):
         user_index = self.mappings['r_user_mapping'][user_id]
         user_vector = self.model.users_matrix[user_index, :]
         user_ratings = user_vector.dot(self.model.movies_matrix.T)
-        highest_rated_movie_indexes = user_ratings.argsort()[::-1][:limit]
+        highest_rated_movie_indexes = user_ratings.argsort()[::-1]
         movie_ids = self.getMovieIdsFromMatrixIndexes(highest_rated_movie_indexes)
-        return movie_ids
+        movie_ids = self.filterWatchedMovies(user_id, movie_ids)
+        return movie_ids[:limit]
 
     def displayMovies(self, movie_ids):
         movie_infos = []
@@ -74,7 +74,7 @@ class Recommender(object):
 
     def filterWatchedMovies(self, user_id, ordered_movie_ids):
         all_movies = set(ordered_movie_ids)
-        rated_movies = set(self.getWatchedMovies(user_id))
+        rated_movies = set(self.getWatchedMovies(user_id, limit = None))
         not_watched = all_movies - rated_movies
         ordered_not_watched = [movie_id for movie_id in ordered_movie_ids if movie_id not in rated_movies]
         return ordered_not_watched

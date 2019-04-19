@@ -1,5 +1,5 @@
 import redis
-import random, sys, time
+import random, sys, time, re
 from flask import Flask, render_template, request, jsonify, Response, url_for
 from flask import redirect, make_response, session
 from model import Recommender
@@ -46,6 +46,15 @@ def signIn():
 # def authenticate():
 # 	return redirect(url_for('home', user_id=23))
 
+@app.route('/json')
+def raw_resp():
+	user_id = int(session['userid'])
+	movie_ids = recommender.recommendMoviesTo(user_id, limit=30)
+
+	watched_ids = recommender.getWatchedMovies(user_id)
+	movies = {'recommended': movie_ids, 'watched': watched_ids}
+	return jsonify(movies)
+
 @app.route('/recommend')
 def recommend():
 	user_id = int(session['userid'])
@@ -83,6 +92,7 @@ def prepareMovies(movies_info):
 	for movie_info in movies_info:
 		movie = {}
 		movie['title'] = movie_info[1] if len(movie_info[1]) <= 46 else movie_info[1][:43] + '...'
+		movie['title'] = re.sub(r'[^\x00-\x7F]+','', movie['title'])
 		url = db.getMovieUrl(movie_info[0])
 		if url == '':
 			url = url_for('static', filename='image-not-available.jpg')

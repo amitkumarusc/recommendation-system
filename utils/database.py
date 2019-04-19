@@ -22,7 +22,7 @@ class Database(object):
 		return record != None
 
 	def getMovieUrl(self, old_movie_id):
-		sql = "select url from idmapper where oldid='%s';"%(str(old_movie_id))
+		sql = "select url from urls where oldid='%s';"%(str(old_movie_id))
 		cursor = self.conn.cursor()
 		cursor.execute(sql)
 		record = None
