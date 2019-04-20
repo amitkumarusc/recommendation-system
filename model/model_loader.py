@@ -5,13 +5,15 @@ import pickle
 from als import AlternatingLeastSquare
 from .best_model import BestModel
 
+MODEL_PATH = 'data/_best_model.bin'
+
 class ModelLoader(object):
 	def __init__(self):
 		np.random.seed(0)
 		pass
 
 	def load(self):
-		if os.path.isfile('data/best_model.bin'):
+		if os.path.isfile(MODEL_PATH):
 			print('Loading the model from disk')
 			self.model = self.readModelFromDisk()
 			print('Model successfully loaded')
@@ -33,11 +35,11 @@ class ModelLoader(object):
 		
 	def writeModelToDisk(self, model):
 		model_file_name = "model_latentFeatureCount_userReg_moviesReg_iterCount"
-		with open('data/best_model.bin', mode='wb') as model_binary:
+		with open(MODEL_PATH, mode='wb') as model_binary:
 			pickle.dump(model, model_binary)
 
 	def readModelFromDisk(self):
-		with open('data/best_model.bin', 'rb') as model_binary:
+		with open(MODEL_PATH, 'rb') as model_binary:
 			model = pickle.load(model_binary)
 		return model
 

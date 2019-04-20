@@ -35,6 +35,9 @@ class AlternatingLeastSquare(object):
         self.users_reg = users_reg
         self.movies_reg = movies_reg
         self.total_users, self.total_movies = self.characteristic_matrix.shape
+        self.user_bias = None
+        self.movie_bias = None
+        self.global_bias = None
     
     @staticmethod
     def calculate_mean_squared_error(predicted, actual):
