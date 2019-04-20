@@ -9,13 +9,6 @@ services:
       - .:/code
     depends_on:
       - postgres
-      - redis
-  redis:
-    image: redis
-    container_name: redis_instance
-    volumes:
-      - ./data/redis:/data
-    command: ["redis-server", "--appendonly", "yes"]
   postgres:
     image: postgres:latest
     container_name: postgres_instance
