@@ -4,3 +4,4 @@
 **.pyc
 data/*
 **.bin
+metastore_db/
