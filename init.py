@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, jsonify, Response, url_for
 from flask import redirect, make_response, session
 from model import Recommender
 from utils import Database
+from utils import Indexer
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -14,15 +15,17 @@ app.secret_key = b'_5#y2L"F4Qas5nb113@&B#(V!*#8z\n\xec]/'
 # cache = redis.Redis('redis')
 db = Database()
 
-recommender = Recommender()
+# recommender = Recommender()
 
 if not db.checkConnectivity():
 	print 'Unable to connect to database'
 	sys.exit(-1)
 
+indexer = Indexer()
+
 @app.before_request
 def authenticateUser():
-	if request.endpoint != 'signIn' and 'userid' not in session:
+	if request.endpoint != 'search' and request.endpoint != 'signIn' and 'userid' not in session:
 		return redirect(url_for('signIn'))
 
 @app.route('/signout')
@@ -86,6 +89,21 @@ def recommend():
 	similar_to['name'] = 'Iron Man'
 	similar_to['recommendations'] = similar
 	return render_template('movies.html', recommended=recommended, recent=recent, popular=popular, watched=watched, similar_to=similar_to)
+
+
+@app.route('/search')
+def search():
+	keyword = request.args.get('keyword', default = '', type = str)
+	movies = indexer.search(keyword)
+	for movie in movies:
+		movie['url'] = db.getMovieUrl(movie['id'])
+	return jsonify(movies)
+
+@app.route('/create_index')
+def create_index():
+	indexer.createIndex()
+	return 'Success'
+
 
 def prepareMovies(movies_info):
 	movies = []
