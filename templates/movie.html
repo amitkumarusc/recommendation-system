@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+	<div>
+		<img class="movie-profile-img" src="{{ movie['url'] }}">
+		<div class="movie-profile-info">
+			<h1>{{ movie['title'] }}</h1>
+			<h2>Rating: 5.0</h2>
+			<h2>Categories</h2>
+		</div>
+	</div>
+{% endblock %}

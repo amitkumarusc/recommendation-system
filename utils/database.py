@@ -21,6 +21,9 @@ class Database(object):
 		record = cursor.fetchone()
 		return record != None
 
+	def getMovieInfo(self, movie_id):
+		pass
+
 	def getMovieUrl(self, old_movie_id):
 		sql = "select url from urls where oldid='%s';"%(str(old_movie_id))
 		cursor = self.conn.cursor()

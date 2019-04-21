@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+	<div>
+		<div class="listing">
+			<h2>Search Results</h2>
+			<div class="wrapper-flexbox">
+				{% for item in search_results %}
+					<div class="card">
+						<div class="movie-info">
+							<a href="/movie/{{ item['id'] }}">
+								<img class="list-image" src="{{ item['url'] }}"/>
+							</a>
+							<p class="img-caption">{{ item['title'] }}</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

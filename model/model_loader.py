@@ -5,7 +5,7 @@ import pickle
 from als import AlternatingLeastSquare
 from .best_model import BestModel
 
-MODEL_PATH = 'data/_best_model.bin'
+MODEL_PATH = 'data/2best_model.bin'
 
 class ModelLoader(object):
 	def __init__(self):

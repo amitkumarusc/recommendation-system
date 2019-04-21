@@ -15,7 +15,7 @@ app.secret_key = b'_5#y2L"F4Qas5nb113@&B#(V!*#8z\n\xec]/'
 # cache = redis.Redis('redis')
 db = Database()
 
-# recommender = Recommender()
+recommender = Recommender()
 
 if not db.checkConnectivity():
 	print 'Unable to connect to database'
@@ -33,16 +33,16 @@ def signOut():
 	session.clear()
 	return redirect(url_for('signIn'))
 
-@app.route('/')
-def index():
-	db.checkConnectivity()
-	return render_template('home.html')
+# @app.route('/')
+# def index():
+# 	db.checkConnectivity()
+# 	return render_template('home.html')
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signIn():
 	if request.method == 'POST':
 		session['userid'] = request.form['userid']
-		return redirect(url_for('recommend'))
+		return redirect(url_for('home'))
 	return render_template('sign_in.html')
 
 # @app.route('/authenticate', methods=['POST'])
@@ -58,8 +58,9 @@ def raw_resp():
 	movies = {'recommended': movie_ids, 'watched': watched_ids}
 	return jsonify(movies)
 
-@app.route('/recommend')
-def recommend():
+
+@app.route('/')
+def home():
 	user_id = int(session['userid'])
 	movie_ids = recommender.recommendMoviesTo(user_id, limit=30)
 	movies_info = recommender.displayMovies(movie_ids)
@@ -90,6 +91,14 @@ def recommend():
 	similar_to['recommendations'] = similar
 	return render_template('movies.html', recommended=recommended, recent=recent, popular=popular, watched=watched, similar_to=similar_to)
 
+@app.route('/search/json')
+def searchJson():
+	keyword = request.args.get('keyword', default = '', type = str)
+	movies = indexer.search(keyword)
+	for movie in movies:
+		movie['url'] = db.getMovieUrl(movie['id'])
+	return jsonify(movies)
+
 
 @app.route('/search')
 def search():
@@ -97,7 +106,13 @@ def search():
 	movies = indexer.search(keyword)
 	for movie in movies:
 		movie['url'] = db.getMovieUrl(movie['id'])
-	return jsonify(movies)
+	return render_template('search_results.html', keyword=keyword, search_results=movies)
+
+@app.route('/movie/<int:movie_id>')
+def showMovie(movie_id):
+	movie = {'title': 'Iron Man', 'url': db.getMovieUrl(movie_id), 'rating': 4.8}
+	return render_template('movie.html', movie=movie)
+
 
 @app.route('/create_index')
 def create_index():
@@ -109,6 +124,7 @@ def prepareMovies(movies_info):
 	movies = []
 	for movie_info in movies_info:
 		movie = {}
+		movie['id'] = movie_info[0]
 		movie['title'] = movie_info[1] if len(movie_info[1]) <= 46 else movie_info[1][:43] + '...'
 		movie['title'] = re.sub(r'[^\x00-\x7F]+','', movie['title'])
 		url = db.getMovieUrl(movie_info[0])

@@ -11,7 +11,9 @@
 				{% for item in recommended %}
 					<div class="card">
 						<div class="movie-info">
-							<img src="{{ item['url'] }}"/>
+							<a href="/movie/{{ item['id'] }}">
+								<img class="list-image" src="{{ item['url'] }}"/>
+							</a>
 							<p class="img-caption">{{ item['title'] }}</p>
 						</div>
 					</div>
@@ -25,7 +27,9 @@
 				{% for item in recent %}
 					<div class="card">
 						<div class="movie-info">
-							<img src="{{ item['url'] }}"/>
+							<a href="/movie/{{ item['id'] }}">
+								<img class="list-image" src="{{ item['url'] }}"/>
+							</a>
 							<p class="img-caption">{{ item['title'] }}</p>
 						</div>
 					</div>
@@ -39,7 +43,9 @@
 				{% for item in popular %}
 					<div class="card">
 						<div class="movie-info">
-							<img src="{{ item['url'] }}"/>
+							<a href="/movie/{{ item['id'] }}">
+								<img class="list-image" src="{{ item['url'] }}"/>
+							</a>
 							<p class="img-caption">{{ item['title'] }}</p>
 						</div>
 					</div>
@@ -54,7 +60,9 @@
 				{% for item in watched %}
 					<div class="card">
 						<div class="movie-info">
-							<img src="{{ item['url'] }}"/>
+							<a href="/movie/{{ item['id'] }}">
+								<img class="list-image" src="{{ item['url'] }}"/>
+							</a>
 							<p class="img-caption">{{ item['title'] }}</p>
 						</div>
 					</div>
@@ -68,7 +76,9 @@
 				{% for item in similar_to['recommendations'] %}
 					<div class="card">
 						<div class="movie-info">
-							<img src="{{ item['url'] }}"/>
+							<a href="/movie/{{ item['id'] }}">
+								<img class="list-image" src="{{ item['url'] }}"/>
+							</a>
 							<p class="img-caption">{{ item['title'] }}</p>
 						</div>
 					</div>
