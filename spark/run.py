@@ -183,9 +183,6 @@ def trainModel(bias):
 
 		usb = sc.broadcast(us)
 
-		# print(movie_bias.shape)
-		# print(user_bias.shape)
-
 		error = rmse(R, ms, us, user_bias, movie_bias)
 		print("Iteration %d:" % i)
 		print("\nRMSE: %5.4f\n" % error)

@@ -8,13 +8,13 @@
 		<div class="listing">
 			<h2>Recommendations</h2>
 			<div class="scrolling-wrapper-flexbox">
-				{% for item in recommended %}
+				{% for movie in recommended %}
 					<div class="card">
 						<div class="movie-info">
-							<a href="/movie/{{ item['id'] }}">
-								<img class="list-image" src="{{ item['url'] }}"/>
+							<a href="/movie/{{ movie['id'] }}">
+								<img class="list-image" src="{{ movie['url'] }}"/>
 							</a>
-							<p class="img-caption">{{ item['title'] }}</p>
+							<p class="img-caption">{{ movie['title'] }}</p>
 						</div>
 					</div>
 				{% endfor %}
@@ -24,13 +24,13 @@
 		<div class="listing">
 			<h2>Recent Releases</h2>
 			<div class="scrolling-wrapper-flexbox">
-				{% for item in recent %}
+				{% for movie in recent %}
 					<div class="card">
 						<div class="movie-info">
-							<a href="/movie/{{ item['id'] }}">
-								<img class="list-image" src="{{ item['url'] }}"/>
+							<a href="/movie/{{ movie['id'] }}">
+								<img class="list-image" src="{{ movie['url'] }}"/>
 							</a>
-							<p class="img-caption">{{ item['title'] }}</p>
+							<p class="img-caption">{{ movie['title'] }}</p>
 						</div>
 					</div>
 				{% endfor %}
@@ -40,13 +40,13 @@
 		<div class="listing">
 			<h2>Popular</h2>
 			<div class="scrolling-wrapper-flexbox">
-				{% for item in popular %}
+				{% for movie in popular %}
 					<div class="card">
 						<div class="movie-info">
-							<a href="/movie/{{ item['id'] }}">
-								<img class="list-image" src="{{ item['url'] }}"/>
+							<a href="/movie/{{ movie['id'] }}">
+								<img class="list-image" src="{{ movie['url'] }}"/>
 							</a>
-							<p class="img-caption">{{ item['title'] }}</p>
+							<p class="img-caption">{{ movie['title'] }}</p>
 						</div>
 					</div>
 				{% endfor %}
@@ -57,13 +57,13 @@
 		<div class="listing">
 			<h2>Watch it again</h2>
 			<div class="scrolling-wrapper-flexbox">
-				{% for item in watched %}
+				{% for movie in watched %}
 					<div class="card">
 						<div class="movie-info">
-							<a href="/movie/{{ item['id'] }}">
-								<img class="list-image" src="{{ item['url'] }}"/>
+							<a href="/movie/{{ movie['id'] }}">
+								<img class="list-image" src="{{ movie['url'] }}"/>
 							</a>
-							<p class="img-caption">{{ item['title'] }}</p>
+							<p class="img-caption">{{ movie['title'] }}</p>
 						</div>
 					</div>
 				{% endfor %}
@@ -73,13 +73,13 @@
 		<div class="listing">
 			<h2>Beacuse you had watched {{ similar_to['name'] }}</h2>
 			<div class="scrolling-wrapper-flexbox">
-				{% for item in similar_to['recommendations'] %}
+				{% for movie in similar_to['recommendations'] %}
 					<div class="card">
 						<div class="movie-info">
-							<a href="/movie/{{ item['id'] }}">
-								<img class="list-image" src="{{ item['url'] }}"/>
+							<a href="/movie/{{ movie['id'] }}">
+								<img class="list-image" src="{{ movie['url'] }}"/>
 							</a>
-							<p class="img-caption">{{ item['title'] }}</p>
+							<p class="img-caption">{{ movie['title'] }}</p>
 						</div>
 					</div>
 				{% endfor %}

@@ -1,24 +1,6 @@
 #!/usr/bin/python
 # coding: utf-8
 
-# New optimal hyperparameters
-# model        <__main__.AlternatingLeastSquare object at 0x1...
-# n_factors                                                   40
-# n_iter                                                      95
-# reg                                                        0.1
-# test_mse                                               10.0342
-# train_mse                                              4.72275
-# dtype: object
-# Regularization: 1.0
-# Regularization: 10.0
-# Regularization: 100.0
-# Factors: 80
-# Regularization: 0.01
-# Regularization: 0.1
-# Regularization: 1.0
-# Regularization: 10.0
-# Regularization: 100.0
-
 import pandas as pd
 import numpy as np
 import random as rn
@@ -41,7 +23,6 @@ class AlternatingLeastSquare(object):
     
     @staticmethod
     def calculate_mean_squared_error(predicted, actual):
-        # mse = (np.square(predicted - actual)).mean(axis=ax)
         predicted = predicted[actual.nonzero()].flatten()
         actual = actual[actual.nonzero()].flatten()
         return ((predicted - actual) ** 2).mean()
@@ -78,14 +59,7 @@ class AlternatingLeastSquare(object):
         return self.users_matrix[user, :].dot(self.movies_matrix[movie, :].T)
     
     def predict_all(self):
-        # predictions = np.zeros((self.total_users, self.total_movies))
-        # for user in xrange(self.total_users):
-        #     for movie in xrange(self.total_movies):
-        #         predictions[user, movie] = self.predict(user, movie)
-
-        predictions = self.users_matrix.dot(self.movies_matrix.T)
-                
-        return predictions
+        return self.users_matrix.dot(self.movies_matrix.T)
     
     def get_train_test_error(self, test_data, iters_list, debug=False):
         test_error = []

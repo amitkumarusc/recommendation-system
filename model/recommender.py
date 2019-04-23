@@ -60,6 +60,7 @@ class Recommender(object):
         user_index = self.mappings['r_user_mapping'][user_id]
         user_vector = self.model.users_matrix[user_index, :]
         user_ratings = user_vector.dot(self.model.movies_matrix.T)
+        user_ratings = user_ratings + np.asarray(self.model.user_bias).reshape(-1,)[user_index] + np.asarray(self.model.movie_bias).reshape(-1,)
         highest_rated_movie_indexes = user_ratings.argsort()[::-1]
         movie_ids = self.getMovieIdsFromMatrixIndexes(highest_rated_movie_indexes)
         movie_ids = self.filterWatchedMovies(user_id, movie_ids)

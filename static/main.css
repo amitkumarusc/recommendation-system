@@ -27,10 +27,6 @@ html, body {
 	flex-wrap: wrap;
 }
 
-.movie-info {
-
-}
-
 .listing {
 	margin-bottom: 20px;
 }
@@ -63,8 +59,8 @@ html, body {
 	box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
 }
 
-.movie-profile-info {
-
+.ratings-graph {
+	display: -webkit-box;
 }
 
 .autcomplete-item {

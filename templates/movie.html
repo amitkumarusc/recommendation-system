@@ -4,12 +4,59 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/histogram-bellcurve.js"></script>
 	<div>
 		<img class="movie-profile-img" src="{{ movie['url'] }}">
 		<div class="movie-profile-info">
 			<h1>{{ movie['title'] }}</h1>
-			<h2>Rating: 5.0</h2>
-			<h2>Categories</h2>
+			<h2>Rating: {{ movie['rating'] }}</h2>
+			<h2>Votes: {{ movie['votes'] }}</h2>
+			<h2>Categories {{ movie['genres'] }}</h2>
+			<div id="container" class="ratings-graph"></div>
+			<script>
+				{% autoescape false %}
+
+				Highcharts.chart('container', {
+				    title: {
+				        text: 'Ratings Distribution'
+				    },
+				    xAxis: [{
+				        title: { text: 'Rating index' },
+				        alignTicks: false
+				    }, {
+				        title: { text: 'Rating' },
+				        alignTicks: false,
+				        opposite: true
+				    }],
+
+				    yAxis: [{
+				        title: { text: 'Rating' }
+				    }, {
+				        title: { text: 'Counts' },
+				        opposite: true
+				    }],
+
+				    series: [{
+				        name: 'Histogram',
+				        type: 'histogram',
+				        xAxis: 1,
+				        yAxis: 1,
+				        baseSeries: 's1',
+				        zIndex: -1
+				    }, {
+				        name: 'Rating value',
+				        type: 'scatter',
+				        data: {{ y_data }},
+				        id: 's1',
+				        marker: {
+				            radius: 1.5
+				        }
+				    }]
+				});
+
+			{% endautoescape %}
+  			</script>
 		</div>
 	</div>
 {% endblock %}

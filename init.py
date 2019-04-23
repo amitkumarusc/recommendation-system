@@ -1,4 +1,3 @@
-import redis
 import random, sys, time, re
 from flask import Flask, render_template, request, jsonify, Response, url_for
 from flask import redirect, make_response, session
@@ -12,7 +11,6 @@ sys.setdefaultencoding('utf-8')
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Qas5nb113@&B#(V!*#8z\n\xec]/'
 
-# cache = redis.Redis('redis')
 db = Database()
 
 recommender = Recommender()
@@ -33,21 +31,12 @@ def signOut():
 	session.clear()
 	return redirect(url_for('signIn'))
 
-# @app.route('/')
-# def index():
-# 	db.checkConnectivity()
-# 	return render_template('home.html')
-
 @app.route('/signin', methods=['GET', 'POST'])
 def signIn():
 	if request.method == 'POST':
 		session['userid'] = request.form['userid']
 		return redirect(url_for('home'))
 	return render_template('sign_in.html')
-
-# @app.route('/authenticate', methods=['POST'])
-# def authenticate():
-# 	return redirect(url_for('home', user_id=23))
 
 @app.route('/json')
 def raw_resp():
@@ -74,12 +63,10 @@ def home():
 	recent_ids = recommender.getRecentMovies()
 	recent_info = recommender.displayMovies(recent_ids)
 
-	# movies_info = [['6 ', "Heat"], ['10', "GoldenEye"], ['15', "Cutthroat Island"], ['20', "Money Train"], ['24', "Powder"], ['28', "Persuasion"], ['32', "Twelve Monkeys"], ['39', "Clueless"], ['43', "Restoration"], ['48', "Pocahontas"], ['57', "Home for the Holidays"], ['65', "Bio-Dome"], ['68', "French Twist"], ['72', "Kicking and Screaming"], ['82', "Antonia's Line"], ['87', "Dunston Checks In"], ['93', "Vampire in Brooklyn"], ['10', "Bottle Rocket"], ['10', "Nobody Loves Me"], ['11', "Taxi Driver"]]
 	recommended = prepareMovies(movies_info)
 	popular = prepareMovies(popular_info)
 	watched = prepareMovies(watched_info)
 	recent = prepareMovies(recent_info)
-
 
 	similar = recommended[:]
 
@@ -110,13 +97,14 @@ def search():
 
 @app.route('/movie/<int:movie_id>')
 def showMovie(movie_id):
-	movie = {'title': 'Iron Man', 'url': db.getMovieUrl(movie_id), 'rating': 4.8}
-	return render_template('movie.html', movie=movie)
+	movie = db.getMovieInfo(movie_id)
+	ratings = db.getRatings(movie_id)
+	return render_template('movie.html', movie=movie, y_data = ratings['ratings'])
 
 
 @app.route('/create_index')
 def create_index():
-	indexer.createIndex()
+	indexer.buildIndex()
 	return 'Success'
 
 
