@@ -23,7 +23,7 @@ We have also made use of Elasticsearch to create an inverted index for providing
 ```>> docker-compose up```
 
 ## Opening the UI
-1. To open the Web UI of the application, open your favourite browser and hit the url `http://localhost:80`
+1. To open the Web UI of the application, open your favourite browser and hit the url `http://localhost/`
 
 <p align="center">
   <img src="static/home.png"/>
@@ -31,4 +31,8 @@ We have also made use of Elasticsearch to create an inverted index for providing
 
 <p align="center">
   <img src="static/movie.png"/>
+</p>
+
+<p align="center">
+  <img src="static/search.png"/>
 </p>

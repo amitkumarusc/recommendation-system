@@ -1,0 +1,29 @@
+version: '2'
+services:
+  web:
+    build: .
+    container_name: flask_web_app
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+    depends_on:
+      - postgres
+      - elasticsearch
+  postgres:
+    image: postgres:latest
+    container_name: postgres_instance
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.0.1
+    container_name: elasticsearch_instance
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+    volumes:
+      - ./data/elasticsearch6/elasticdata:/usr/share/elasticsearch/data
+      - ./data/elasticsearch6/elasticconfig:/usr/share/elasticsearch/config
