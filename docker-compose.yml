@@ -25,4 +25,5 @@ services:
     ports:
       - "9200:9200"
     volumes:
-      - ./data/elasticsearch6:/usr/share/elasticsearch/data
+      - ./data/elasticsearch6/elasticdata:/usr/share/elasticsearch/data
+      - ./data/elasticsearch6/elasticconfig:/usr/share/elasticsearch/config

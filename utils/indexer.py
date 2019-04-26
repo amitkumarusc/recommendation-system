@@ -62,7 +62,7 @@ class Indexer(object):
 
 	def search(self, keyword):
 		keyword = keyword.lower()
-		query = '{"suggest": {"movie-suggest-fuzzy": {"prefix": "%s","completion": {"field": "title", "size": 200, "fuzzy": {"fuzziness": 0 }}}}}'%keyword
+		query = '{"suggest": {"movie-suggest-fuzzy": {"prefix": "%s","completion": {"field": "title", "size": 200, "fuzzy": {"fuzziness": 1 }}}}}'%keyword
 		resp = requests.post('http://elasticsearch:9200/' + INDEX_NAME + '/_search', data=query, headers={'content-type':'application/json'}).json()
 		movies = []
 		for doc in resp['suggest']['movie-suggest-fuzzy'][0]['options']:

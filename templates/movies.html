@@ -22,6 +22,22 @@
 		</div>
 
 		<div class="listing">
+			<h2>Watch it again</h2>
+			<div class="scrolling-wrapper-flexbox">
+				{% for movie in watched %}
+					<div class="card">
+						<div class="movie-info">
+							<a href="/movie/{{ movie['id'] }}">
+								<img class="list-image" src="{{ movie['url'] }}"/>
+							</a>
+							<p class="img-caption">{{ movie['title'] }}</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+		<div class="listing">
 			<h2>Recent Releases</h2>
 			<div class="scrolling-wrapper-flexbox">
 				{% for movie in recent %}
@@ -41,23 +57,6 @@
 			<h2>Popular</h2>
 			<div class="scrolling-wrapper-flexbox">
 				{% for movie in popular %}
-					<div class="card">
-						<div class="movie-info">
-							<a href="/movie/{{ movie['id'] }}">
-								<img class="list-image" src="{{ movie['url'] }}"/>
-							</a>
-							<p class="img-caption">{{ movie['title'] }}</p>
-						</div>
-					</div>
-				{% endfor %}
-			</div>
-		</div>
-
-
-		<div class="listing">
-			<h2>Watch it again</h2>
-			<div class="scrolling-wrapper-flexbox">
-				{% for movie in watched %}
 					<div class="card">
 						<div class="movie-info">
 							<a href="/movie/{{ movie['id'] }}">

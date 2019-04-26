@@ -34,8 +34,9 @@ def signOut():
 @app.route('/signin', methods=['GET', 'POST'])
 def signIn():
 	if request.method == 'POST':
-		session['userid'] = request.form['userid']
-		return redirect(url_for('home'))
+		if int(request.form['userid']) > 34394:
+			session['userid'] = request.form['userid']
+			return redirect(url_for('home'))
 	return render_template('sign_in.html')
 
 @app.route('/json')
